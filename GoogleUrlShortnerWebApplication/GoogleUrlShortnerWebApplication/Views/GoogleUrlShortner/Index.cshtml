@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "Google Url Shortner";
+}
+
+<h2>List of Url Separated by New Line</h2>
+
+<p>&nbsp;</p>
+
+<div>
+    <textarea id="urlsNewLineSeparated" class="largeTextArea"></textarea>
+</div>
+
+<p>&nbsp;</p>
+
+<div>
+    <textarea id="urlShortnerResult" class="largeTextArea"></textarea>
+</div>
+
+<p>&nbsp;</p>
+
+<div>
+    <input type="button" value="submit" id="submitButton"/>
+</div>
+
+@section Scripts {
+    
+   <script type="text/javascript">
+
+       $('#submitButton').click(function () {
+
+           var jsonDataObject = {};
+           jsonDataObject["urlsNewLineSeparated"] = $('#urlsNewLineSeparated').val();
+          
+           $.ajax({
+               url: '@Url.Action("UrlShortner", "GoogleUrlShortner")',
+               contentType: "application/json; charset=utf-8",
+               type: "POST",
+               dataType: "json",
+               data: JSON.stringify(jsonDataObject),
+
+           })
+           .success(function (result) {
+               $('#urlShortnerResult').val(result.responseText);
+           })
+           .error(function (result) {
+               $('#urlShortnerResult').val(result.responseText);
+           })
+       });
+       
+    </script> 
+
+}
+
+
+
+
+
+
